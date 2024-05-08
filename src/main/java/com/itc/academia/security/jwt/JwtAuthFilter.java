@@ -46,7 +46,8 @@ public class JwtAuthFilter extends OncePerRequestFilter{
 		//Url que no se necesitan autenticar
 	    List<String> urlsToSkip = List.of("/swagger-ui.html/**"
 	    		, "/swagger-ui/**"
-	    		, (seguridadHabilitada) ? "/auth/**" : "/**");
+	    		, (seguridadHabilitada) ? "/auth/**" : "/**"
+	    		, (request.getMethod().equals(HttpMethod.POST.toString())) ? "/usuario" : "/auth/**");
 
         String requestURI = request.getRequestURI();
         return urlsToSkip.stream().anyMatch(url -> new AntPathMatcher().match(url, requestURI));

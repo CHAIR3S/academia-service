@@ -126,13 +126,14 @@ public class UsuarioService implements IUsuarioService{
         RespuestaDTO respuesta = new RespuestaDTO();
         Optional<Usuario> usuarioBd = repository.findById(usuarioDTO.getIdUsuario());
         
-        if(!usuarioBd.get().getContrasena().equals(usuarioDTO.getContrasena()) || !usuarioDTO.getContrasena().equals("")) {
-        	usuarioDTO.setContrasena(passwordEncoder.encode(usuarioDTO.getContrasena()));
-        }
+        log.info(usuarioDTO.getContrasena());
         
-        
-        if(usuarioBd.get().getContrasena().equals(usuarioDTO.getContrasena()) || usuarioDTO.getContrasena().equals("")) {
-        	usuarioDTO.setContrasena(usuarioDTO.getContrasena());
+        if(!usuarioBd.get().getContrasena().equals(usuarioDTO.getContrasena()) && !usuarioDTO.getContrasena().equals("")) {
+            usuarioDTO.setContrasena(passwordEncoder.encode(usuarioDTO.getContrasena()));
+            log.info("Nueva contraseña");
+        } else {
+        	usuarioDTO.setContrasena(usuarioBd.get().getContrasena());
+            log.info("Misma contraseña");
         }
         
 

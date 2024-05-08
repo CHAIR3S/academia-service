@@ -9,6 +9,7 @@ import org.springframework.boot.logging.LogLevel;
 import org.springframework.boot.logging.LoggingSystem;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -67,6 +68,8 @@ public class SecurityConfig {
                 .authorizeHttpRequests(requests ->
                         requests
                         		.requestMatchers(path, "/swagger-ui.html", "/swagger-ui/**").permitAll()
+                        		
+                        		.requestMatchers(HttpMethod.POST, "/usuario").permitAll()
                         		
                         		
                                 .anyRequest().authenticated()
