@@ -47,8 +47,8 @@ public class Usuario implements Serializable{
 	private String nivelEstudios;
 
 	@Lob
-	@Column(name = "foto", columnDefinition = "LONGBLOB")
-	private String foto;
+	@Column(name = "foto", columnDefinition = "BYTEA")
+	private byte[] foto;
 
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_aprendizaje")

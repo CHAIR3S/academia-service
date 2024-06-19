@@ -28,12 +28,12 @@ public class InitializationDBConfig {
     		log.debug("Creando usuario admin");
     		
     		
-    		Usuario usuario = new Usuario();
-    		
-    		usuario.setCorreo("admin@academia.com");
-    		usuario.setContrasena(passwordEncoderUtil.encode("contrasena"));
-
-    		usuarioRepository.save(usuario);
+//    		Usuario usuario = new Usuario();
+//    		
+//    		usuario.setCorreo("admin@academia.com");
+//    		usuario.setContrasena(passwordEncoderUtil.encode("contrasena"));
+//
+//    		usuarioRepository.save(usuario);
     		
     	}
     	
