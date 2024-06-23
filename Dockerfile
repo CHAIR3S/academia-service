@@ -4,21 +4,30 @@ FROM maven:3.8.6-eclipse-temurin-17 AS build
 # Directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copia los archivos de configuración y dependencias para aprovechar la caché de Docker
+# Copia solo los archivos de configuración inicialmente para aprovechar la caché de Docker
 COPY pom.xml .
+
+# Descarga las dependencias del proyecto sin compilar nada
+RUN mvn dependency:go-offline
+
+# Copia el resto de los archivos del proyecto
 COPY src ./src
 
-# Compila el proyecto y construye el JAR
+# Compila el proyecto y construye el WAR
 RUN mvn clean package -DskipTests
 
 # Etapa final
-FROM eclipse-temurin:17-jdk-alpine
+FROM tomcat:10.1-jdk17-corretto-alpine
 
-# Expone el puerto 8090
-EXPOSE 8090
+# Copia el WAR del directorio target del contenedor de construcción al directorio webapps de Tomcat
+COPY --from=build /app/target/academia-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 
-# Copia el JAR del directorio target del contenedor de construcción al contenedor final
-COPY --from=build /app/target/*.jar app.jar
+# Expone el puerto 8080
+EXPOSE 8080
 
-# Punto de entrada para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Configura Tomcat
+RUN rm -rf /usr/local/tomcat/webapps/ROOT && \
+    mv /usr/local/tomcat/webapps/ROOT.war /usr/local/tomcat/webapps/ROOT.war
+
+# Inicia Tomcat
+CMD ["catalina.sh", "run"]
