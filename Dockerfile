@@ -17,17 +17,16 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Etapa final
-FROM tomcat:10.1-jdk17-corretto-alpine
+FROM tomcat:10.1.12-jdk17-temurin-jammy
+
+# Elimina aplicaciones por defecto de Tomcat
+RUN rm -rf /usr/local/tomcat/webapps/ROOT
 
 # Copia el WAR del directorio target del contenedor de construcción al directorio webapps de Tomcat
 COPY --from=build /app/target/academia-0.0.1-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 
 # Expone el puerto 8080
 EXPOSE 8080
-
-# Configura Tomcat
-RUN rm -rf /usr/local/tomcat/webapps/ROOT && \
-    mv /usr/local/tomcat/webapps/ROOT.war /usr/local/tomcat/webapps/ROOT.war
 
 # Inicia Tomcat
 CMD ["catalina.sh", "run"]
