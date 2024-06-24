@@ -1,9 +1,14 @@
 package com.itc.academia.service;
 
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,6 +19,7 @@ import com.itc.academia.entity.Usuario;
 import com.itc.academia.repository.UsuarioRepository;
 import com.itc.academia.util.PasswordEncoderUtil;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,7 +43,8 @@ public class UsuarioService implements IUsuarioService{
         Usuario usuario = modelMapper.map(usuarioDTO, Usuario.class);
         return usuario;
     }
-	
+
+    @Transactional
 	@Override
 	public RespuestaDTO obtener() {
         RespuestaDTO respuesta = new RespuestaDTO();
@@ -58,6 +65,7 @@ public class UsuarioService implements IUsuarioService{
         return respuesta;
 	}
 
+    @Transactional
 	@Override
 	public RespuestaDTO obtenerPorId(Long id) {
         RespuestaDTO respuesta = new RespuestaDTO();
@@ -104,6 +112,7 @@ public class UsuarioService implements IUsuarioService{
         return respuesta;
 	}
 
+    @Transactional
 	@Override
 	public RespuestaDTO crea(UsuarioDTO usuarioDTO) {
         RespuestaDTO respuesta = new RespuestaDTO();
@@ -111,7 +120,13 @@ public class UsuarioService implements IUsuarioService{
         
         
         Usuario usuarioToCreate = convertToEntity(usuarioDTO);
+        
+//        byte[] fotoBytes = usuarioDTO.getFoto().getBytes();
+//        
+//        usuarioToCreate.setFoto(fotoBytes);
+        
         Usuario usuarioCreated = repository.save(usuarioToCreate);
+        
 
         respuesta.setEstatus("1");
         respuesta.setObject(convertToDto(usuarioCreated));
@@ -121,6 +136,7 @@ public class UsuarioService implements IUsuarioService{
         return respuesta;
 	}
 
+    @Transactional
 	@Override
 	public RespuestaDTO actualiza(UsuarioDTO usuarioDTO) {
         RespuestaDTO respuesta = new RespuestaDTO();
@@ -146,8 +162,13 @@ public class UsuarioService implements IUsuarioService{
 
             return respuesta;
         }
+        
 
         Usuario usuarioToUpdate = convertToEntity(usuarioDTO);
+        
+        //Misma imagen
+        usuarioToUpdate.setFoto(usuarioBd.get().getFoto());
+        
         Usuario usuarioUpdated = repository.save(usuarioToUpdate);
 
         log.info("Usuario actualizado correctamente");
@@ -160,9 +181,15 @@ public class UsuarioService implements IUsuarioService{
         return respuesta;
 	}
 
+
+    @Transactional
 	@Override
-	public RespuestaDTO obtenerPorEmail(String email) {
+	public RespuestaDTO obtenerPorEmail(String email) throws HibernateException {
         RespuestaDTO respuesta = new RespuestaDTO();
+        
+        
+        
+        
         Optional<Usuario> usuarioBd = repository.findByCorreo(email);
         		
 

@@ -14,6 +14,7 @@ import com.itc.academia.dto.RespuestaDTO;
 import com.itc.academia.entity.Mensaje;
 import com.itc.academia.repository.MensajeRepository;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -38,6 +39,7 @@ public class MensajeService implements IMensajeService{
     }
 
 
+    @Transactional
 	@Override
 	public RespuestaDTO obtener() {
         RespuestaDTO respuesta = new RespuestaDTO();
@@ -58,6 +60,7 @@ public class MensajeService implements IMensajeService{
         return respuesta;
 	}
 
+    @Transactional
 	@Override
 	public RespuestaDTO obtenerPorId(Long id) {
         RespuestaDTO respuesta = new RespuestaDTO();
@@ -104,10 +107,16 @@ public class MensajeService implements IMensajeService{
         return respuesta;
 	}
 
+    @Transactional
 	@Override
 	public RespuestaDTO crea(MensajeDTO mensajeDTO) {
         RespuestaDTO respuesta = new RespuestaDTO();
         Mensaje mensajeToCreate = convertToEntity(mensajeDTO);
+        
+//        byte[] archivoBytes = mensajeDTO.getArchivo().getBytes();
+//        
+//        mensajeToCreate.setArchivo(archivoBytes);
+        
         Mensaje mensajeCreated = repository.save(mensajeToCreate);
 
         respuesta.setEstatus("1");
@@ -118,6 +127,7 @@ public class MensajeService implements IMensajeService{
         return respuesta;
 	}
 
+    @Transactional
 	@Override
 	public RespuestaDTO actualiza(MensajeDTO mensajeDTO) {
         RespuestaDTO respuesta = new RespuestaDTO();
@@ -146,6 +156,7 @@ public class MensajeService implements IMensajeService{
         return respuesta;
 	}
 
+    @Transactional
 	@Override
 	public RespuestaDTO obtenerPorChat(Long idChat) {
         RespuestaDTO respuesta = new RespuestaDTO();

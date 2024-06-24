@@ -11,6 +11,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import org.hibernate.annotations.Type;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -47,8 +48,8 @@ public class Usuario implements Serializable{
 	private String nivelEstudios;
 
 	@Lob
-	@Column(name = "foto", columnDefinition = "BYTEA")
-	private byte[] foto;
+//	@Column(columnDefinition = "BYTEA")
+	private String foto;
 
 	@ManyToOne
 	@JoinColumn(name = "id_tipo_aprendizaje")

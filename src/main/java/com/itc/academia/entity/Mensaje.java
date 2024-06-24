@@ -39,8 +39,7 @@ public class Mensaje implements Serializable{
 	private LocalDateTime fecha;
 
 	@Lob
-	@Column(name = "archivo", columnDefinition = "BYTEA")
-	private byte[] archivo;    
+	private String archivo;    
 	
 	private boolean ia;
 
