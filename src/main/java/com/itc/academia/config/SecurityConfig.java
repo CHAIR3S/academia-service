@@ -86,7 +86,8 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://academia-sable.vercel.app"));
+//        configuration.setAllowedOrigins(Arrays.asList("https://academia-sable.vercel.app"));
+        configuration.setAllowedOrigins(Arrays.asList(CorsConfiguration.ALL));
         configuration.setAllowedMethods(Arrays.asList(CorsConfiguration.ALL));
         configuration.setAllowedHeaders(Arrays.asList(CorsConfiguration.ALL));
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
