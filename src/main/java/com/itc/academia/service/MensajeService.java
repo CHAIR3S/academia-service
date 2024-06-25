@@ -11,7 +11,9 @@ import org.springframework.stereotype.Service;
 import com.itc.academia.dto.ChatDTO;
 import com.itc.academia.dto.MensajeDTO;
 import com.itc.academia.dto.RespuestaDTO;
+import com.itc.academia.entity.Chat;
 import com.itc.academia.entity.Mensaje;
+import com.itc.academia.entity.Usuario;
 import com.itc.academia.repository.MensajeRepository;
 
 import jakarta.transaction.Transactional;
@@ -183,6 +185,13 @@ public class MensajeService implements IMensajeService{
         }
 
         mensajes.forEach(mensaje -> {
+        	Chat chatSinUsuario = mensaje.getChat();
+        	Usuario usuarioSoloId = new Usuario();
+        	usuarioSoloId.setIdUsuario(mensaje.getChat().getUsuario().getIdUsuario());
+        	
+        	chatSinUsuario.setUsuario(usuarioSoloId);
+        	
+        	mensaje.setChat(chatSinUsuario);
             mensajeDTOs.add(convertToDto(mensaje));
         });
 
