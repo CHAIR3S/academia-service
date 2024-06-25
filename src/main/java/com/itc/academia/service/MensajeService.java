@@ -162,15 +162,15 @@ public class MensajeService implements IMensajeService{
         RespuestaDTO respuesta = new RespuestaDTO();
         ChatDTO chatDTO = new ChatDTO();
         
-//        respuesta = chatService.obtenerPorId(idChat);
+        respuesta = chatService.obtenerPorId(idChat);
         
-//        if("0".equals(respuesta.getEstatus())) {
-//        	return respuesta;
-//        }
+        if("0".equals(respuesta.getEstatus())) {
+        	return respuesta;
+        }
         
-//        chatDTO = (ChatDTO) respuesta.getObject();
+        chatDTO = (ChatDTO) respuesta.getObject();
         
-        List<Mensaje> mensajes = repository.findByChat(idChat);
+        List<Mensaje> mensajes = repository.findByChat(chatService.convertToEntity(chatDTO));
         List<MensajeDTO> mensajeDTOs = new ArrayList<>();
 
         if (mensajes.isEmpty()) {
