@@ -44,7 +44,7 @@ public class Mensaje implements Serializable{
 	
 	private boolean ia;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
 	@JoinColumn(name = "id_chat")
 	private Chat chat;
 	

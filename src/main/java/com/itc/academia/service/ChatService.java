@@ -29,22 +29,22 @@ public class ChatService implements IChatService{
     @Autowired
     private UsuarioService usuarioService;
 
-//    ChatDTO convertToDto(Chat chat) {
-//        return modelMapper.map(chat, ChatDTO.class);
-//    }
-    
-    private ChatDTO convertToDTO(Chat chat) {
-        UsuarioDTO usuarioDTO = new UsuarioDTO(chat.getUsuario().getIdUsuario(),
-                                               chat.getUsuario().getCorreo(),
-                                               "",
-                                               chat.getUsuario().getNombre(),
-                                               chat.getUsuario().getEdad(),
-                                               chat.getUsuario().getSexo(),
-                                               chat.getUsuario().getGrado(),
-                                               chat.getUsuario().getNivelEstudios(),
-        										"", null);
-        return new ChatDTO(chat.getIdChat(), chat.getNombre(), chat.getFecha(), usuarioDTO);
+    ChatDTO convertToDTO(Chat chat) {
+        return modelMapper.map(chat, ChatDTO.class);
     }
+    
+//    private ChatDTO convertToDTO(Chat chat) {
+//        UsuarioDTO usuarioDTO = new UsuarioDTO(chat.getUsuario().getIdUsuario(),
+//                                               chat.getUsuario().getCorreo(),
+//                                               "",
+//                                               chat.getUsuario().getNombre(),
+//                                               chat.getUsuario().getEdad(),
+//                                               chat.getUsuario().getSexo(),
+//                                               chat.getUsuario().getGrado(),
+//                                               chat.getUsuario().getNivelEstudios(),
+//        										"", null);
+//        return new ChatDTO(chat.getIdChat(), chat.getNombre(), chat.getFecha(), usuarioDTO);
+//    }
     
 
     Chat convertToEntity(ChatDTO chatDTO) {

@@ -43,7 +43,7 @@ public class Chat implements Serializable{
 	private LocalDateTime fecha;
 	
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
 	@JoinColumn(name = "id_usuario")
 	private Usuario usuario;
 
