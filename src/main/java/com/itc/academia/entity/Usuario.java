@@ -2,8 +2,10 @@ package com.itc.academia.entity;
 
 import java.io.Serializable;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -12,6 +14,9 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import org.hibernate.annotations.Type;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -49,6 +54,8 @@ public class Usuario implements Serializable{
 
 	@Lob
 //	@Column(columnDefinition = "BYTEA")
+	@Basic(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private String foto;
 
 	@ManyToOne

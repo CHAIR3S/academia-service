@@ -2,6 +2,8 @@ package com.itc.academia.dto;
 
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,5 +21,6 @@ public class MensajeDTO {
 	
 	private boolean ia;
 
+	@JsonIgnore
 	private ChatDTO chat;
 }

@@ -190,8 +190,7 @@ public class UsuarioService implements IUsuarioService{
         
         
         
-        Optional<Usuario> usuarioBd = repository.findByCorreo(email);
-        		
+        Optional<Usuario> usuarioBd = repository.findByCorreo(email);        		
 
         if (!usuarioBd.isPresent()) {
             log.error("Error, usuario no encontrado");
@@ -202,6 +201,8 @@ public class UsuarioService implements IUsuarioService{
 
             return respuesta;
         }
+        
+        usuarioBd.get().getFoto();
         
         log.info("Usuario encontrado por email: ", email);
 

@@ -29,9 +29,23 @@ public class ChatService implements IChatService{
     @Autowired
     private UsuarioService usuarioService;
 
-    ChatDTO convertToDto(Chat chat) {
-        return modelMapper.map(chat, ChatDTO.class);
+//    ChatDTO convertToDto(Chat chat) {
+//        return modelMapper.map(chat, ChatDTO.class);
+//    }
+    
+    private ChatDTO convertToDTO(Chat chat) {
+        UsuarioDTO usuarioDTO = new UsuarioDTO(chat.getUsuario().getIdUsuario(),
+                                               chat.getUsuario().getCorreo(),
+                                               "",
+                                               chat.getUsuario().getNombre(),
+                                               chat.getUsuario().getEdad(),
+                                               chat.getUsuario().getSexo(),
+                                               chat.getUsuario().getGrado(),
+                                               chat.getUsuario().getNivelEstudios(),
+        										"", null);
+        return new ChatDTO(chat.getIdChat(), chat.getNombre(), chat.getFecha(), usuarioDTO);
     }
+    
 
     Chat convertToEntity(ChatDTO chatDTO) {
         return modelMapper.map(chatDTO, Chat.class);
@@ -44,7 +58,7 @@ public class ChatService implements IChatService{
         List<ChatDTO> chatDTOs = new ArrayList<>();
 
         chats.forEach(chat -> {
-            chatDTOs.add(convertToDto(chat));
+            chatDTOs.add(convertToDTO(chat));
         });
 
         log.info("Chats encontrados -> " + chats.size());
@@ -77,7 +91,7 @@ public class ChatService implements IChatService{
 
         respuesta.setEstatus("1");
         respuesta.setMensaje("Chat encontrado por ID");
-        respuesta.setObject(convertToDto(chatFound));
+        respuesta.setObject(convertToDTO(chatFound));
         respuesta.setLista(null);
 
         return respuesta;
@@ -110,7 +124,7 @@ public class ChatService implements IChatService{
         Chat chatCreated = repository.save(chatToCreate);
 
         respuesta.setEstatus("1");
-        respuesta.setObject(convertToDto(chatCreated));
+        respuesta.setObject(convertToDTO(chatCreated));
         respuesta.setMensaje("Chat creado correctamente");
         respuesta.setLista(null);
 
@@ -139,7 +153,7 @@ public class ChatService implements IChatService{
 
         respuesta.setEstatus("1");
         respuesta.setMensaje("Chat actualizado correctamente");
-        respuesta.setObject(convertToDto(chatUpdated));
+        respuesta.setObject(convertToDTO(chatUpdated));
         respuesta.setLista(null);
 
         return respuesta;
@@ -171,7 +185,7 @@ public class ChatService implements IChatService{
 	    }
 
 	    chats.forEach(chat -> {
-	        chatDTOs.add(convertToDto(chat));
+	        chatDTOs.add(convertToDTO(chat));
 	    });
 
 	    log.info("Chats encontrados para el usuario -> " + usuarioDTO.getIdUsuario() + ": " + chats.size());
