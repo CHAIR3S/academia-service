@@ -54,8 +54,6 @@ public class Usuario implements Serializable{
 
 	@Lob
 //	@Column(columnDefinition = "BYTEA")
-	@Basic(fetch = FetchType.LAZY)
-	@JsonIgnore
 	private String foto;
 
 	@ManyToOne

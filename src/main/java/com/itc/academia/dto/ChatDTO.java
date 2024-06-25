@@ -20,8 +20,8 @@ public class ChatDTO {
 	private String nombre;
 	
 	private LocalDateTime fecha;
-	
-	@JsonIgnore
+
+
 	private UsuarioDTO usuario;
 
 }

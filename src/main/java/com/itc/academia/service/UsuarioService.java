@@ -202,7 +202,6 @@ public class UsuarioService implements IUsuarioService{
             return respuesta;
         }
         
-        usuarioBd.get().getFoto();
         
         log.info("Usuario encontrado por email: ", email);
 

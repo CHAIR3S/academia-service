@@ -13,7 +13,6 @@ import com.itc.academia.entity.Mensaje;
 public interface MensajeRepository extends JpaRepository<Mensaje, Long>{
 	
 
-	@Query("SELECT m FROM Mensaje m WHERE m.chat.idChat = ?1")
 	public List<Mensaje> findByChat(Long id);
 
 }

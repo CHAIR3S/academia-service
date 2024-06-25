@@ -11,7 +11,6 @@ import com.itc.academia.entity.Usuario;
 public interface ChatRepository extends JpaRepository<Chat, Long>{
 
 
-    @EntityGraph(attributePaths = {"usuario"})
 	public List<Chat> findByUsuario(Usuario usuario);
 	
 }

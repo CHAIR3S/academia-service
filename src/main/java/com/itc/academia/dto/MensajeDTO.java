@@ -21,6 +21,5 @@ public class MensajeDTO {
 	
 	private boolean ia;
 
-	@JsonIgnore
 	private ChatDTO chat;
 }
