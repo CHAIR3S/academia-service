@@ -118,7 +118,9 @@ public class MensajeService implements IMensajeService{
 //        byte[] archivoBytes = mensajeDTO.getArchivo().getBytes();
 //        
 //        mensajeToCreate.setArchivo(archivoBytes);
-        
+
+
+        mensajeToCreate.setArchivo("");
         Mensaje mensajeCreated = repository.save(mensajeToCreate);
 
         respuesta.setEstatus("1");

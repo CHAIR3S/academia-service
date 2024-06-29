@@ -30,5 +30,7 @@ public class UsuarioDTO {
 	private String foto;
 
 	private TipoAprendizajeDTO tipoAprendizaje;
+	
+	private String googleJWT;
 
 }

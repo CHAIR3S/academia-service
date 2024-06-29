@@ -116,7 +116,9 @@ public class UsuarioService implements IUsuarioService{
 	@Override
 	public RespuestaDTO crea(UsuarioDTO usuarioDTO) {
         RespuestaDTO respuesta = new RespuestaDTO();
-        usuarioDTO.setContrasena(passwordEncoder.encode(usuarioDTO.getContrasena()));
+        
+        if(usuarioDTO.getContrasena() != null && usuarioDTO.getContrasena() != "")
+        	usuarioDTO.setContrasena(passwordEncoder.encode(usuarioDTO.getContrasena()));
         
         
         Usuario usuarioToCreate = convertToEntity(usuarioDTO);
@@ -141,15 +143,18 @@ public class UsuarioService implements IUsuarioService{
 	public RespuestaDTO actualiza(UsuarioDTO usuarioDTO) {
         RespuestaDTO respuesta = new RespuestaDTO();
         Optional<Usuario> usuarioBd = repository.findById(usuarioDTO.getIdUsuario());
+
+        if(usuarioDTO.getContrasena() != null && usuarioDTO.getContrasena() != "") {
+        	log.info(usuarioDTO.getContrasena());
         
-        log.info(usuarioDTO.getContrasena());
-        
-        if(!usuarioBd.get().getContrasena().equals(usuarioDTO.getContrasena()) && !usuarioDTO.getContrasena().equals("")) {
-            usuarioDTO.setContrasena(passwordEncoder.encode(usuarioDTO.getContrasena()));
-            log.info("Nueva contraseña");
-        } else {
-        	usuarioDTO.setContrasena(usuarioBd.get().getContrasena());
-            log.info("Misma contraseña");
+	        if(!usuarioBd.get().getContrasena().equals(usuarioDTO.getContrasena()) && !usuarioDTO.getContrasena().equals("")) {
+	            usuarioDTO.setContrasena(passwordEncoder.encode(usuarioDTO.getContrasena()));
+	            log.info("Nueva contraseña");
+	        } else {
+	        	usuarioDTO.setContrasena(usuarioBd.get().getContrasena());
+	            log.info("Misma contraseña");
+	        }
+        	
         }
         
 

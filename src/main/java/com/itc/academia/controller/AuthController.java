@@ -32,7 +32,12 @@ public class AuthController {
     	log.debug("Inicio de autenticacion");
     	
     	try{
-        	respuesta = service.autenticar(userAuthDTO);  
+    		if(userAuthDTO.getGoogleJWT() != null && userAuthDTO.getGoogleJWT() != "")
+    			respuesta = service.autenticarGoogle(userAuthDTO); 
+
+    		if(userAuthDTO.getGoogleJWT() == null || userAuthDTO.getGoogleJWT() == "")
+    			respuesta = service.autenticar(userAuthDTO); 
+        	
         	log.debug(respuesta.getMensaje());
     	}catch ( ContrasenaIncorrectaException e) {
     		log.error("Error, contraseña incorrecta");

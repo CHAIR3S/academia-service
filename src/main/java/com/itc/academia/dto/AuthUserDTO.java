@@ -11,4 +11,6 @@ public class AuthUserDTO {
 	
 	String contrasena;
 	
+	String googleJWT;
+	
 }
